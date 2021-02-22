@@ -4,24 +4,24 @@
 
 ### Conception graphique
 
-[La navigation](https://github.com/PierreLANGE/Aerosoft-projet/blob/main/Conception/Maquette%2Bcharte%20graphique/Aerosoft-projet-navigation.pdf)
+[La navigation](Conception/Maquette%2Bcharte%20graphique/Aerosoft-projet-navigation.pdf)
 
-[La maquette](https://github.com/PierreLANGE/Aerosoft-projet/blob/main/Conception/Maquette%2Bcharte%20graphique/Maquette%20aerosoft.pdf)
+[La maquette](Conception/Maquette%2Bcharte%20graphique/Maquette%20aerosoft.pdf)
 
 ### Conception des données
 
-[Dictionnaire des données](https://github.com/PierreLANGE/Aerosoft-projet/blob/main/Conception/SQL%2BModelisation/Aerosoft-projet_data_dict.md)
+[Dictionnaire des données](Conception/SQL%2BModelisation/Aerosoft-projet_data_dict.md)
 
-[MCD](https://github.com/PierreLANGE/Aerosoft-projet/blob/main/Conception/SQL%2BModelisation/Aerosoft-projet-MCD.PNG)
+[MCD](Conception/SQL%2BModelisation/Aerosoft-projet-MCD.PNG)
 
-[MLD](Conception/SQL+Modelisation/Aerosoft-projet-MLD.html)
+[MLD](Conception/SQL%2BModelisation/Aerosoft-projet-MLD.html)
 
-[MPD](Conception/SQL+Modelisation/Aerosoft-projet-MPD.PNG)
+[MPD](Conception/SQL%2BModelisation/Aerosoft-projet-MPD.PNG)
 
 ### Diagramme
 
 [Diagramme de cas d'utilisation](Conception/Diagrammes/Aerosoft-projet-diagramme-cas-utilisation.jpg)
 
-[Diagramme de package](Conception/Diagrammes/Diagramme-de-Package.pdf)
+[Diagramme de package](Conception/Diagrammes/Diagramme%20de%20Package.pdf)
 
 [Diagramme de séquence](Conception/Diagrammes/Diagramme-sequence.png)
