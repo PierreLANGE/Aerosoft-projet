@@ -1,92 +1,262 @@
-package Dao;
+package dao;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import connexion.ConnectionBdd;
+import interfaces.Dao;
+import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import models.*;
+import vues.SDialog;
 
-import Interfaces.Dao;
-import Models.Aeroport;
-import compAero.Services;
-
-public class AeroportDao implements Dao<Aeroport> {
-
-	Services s = new Services();
-
-	private List<Aeroport> aeroports = new ArrayList<>();
+public class AeroportDao implements Dao {
 
 	public AeroportDao() {
-		super();
-		
-		Connection conn = null;
-		Statement stmt = null;
-		
-		conn = s.getConn(conn);
-		stmt = s.getStmt(stmt, conn);
-		
-		final String sql = "SELECT * from Aeroport ORDER BY NomVilleDesservie asc";
+	}
 
-		Aeroport aeroport = null;
+	/**
+	 * @return ArrayList<Aeroport>
+	 */
+	@Override
+	public ArrayList<Aeroport> getAll() {
+
+		Connection conn = null;
+		PreparedStatement stmt = null;
+
+		String sql = "SELECT * FROM `AEROPORT` ORDER BY NomVilleDesservie";
+
+		ArrayList<Aeroport> listeAeroports = new ArrayList<>();
 
 		try {
-			final ResultSet rs = stmt.executeQuery(sql);
-			while (rs.next()) {
-				aeroport = new Aeroport();
-				
-	            /*final String idAeroport = rs.getString("idAeroport");
-	            final String nomAeroprt = rs.getString("NomAeroprt");
-	            final String nomVilleDesservie = rs.getString("NomVilleDesservie");*/
 
-				aeroport.setIdAeroport(rs.getString(1));
-				aeroport.setNomAeroport(rs.getString(2));
-				aeroport.setNomVilleDesservie(rs.getString(3));
+			conn = ConnectionBdd.getConnection();
+			stmt = conn.prepareStatement(sql);
+			ResultSet res = stmt.executeQuery(sql);
 
-				aeroports.add(aeroport);
+			while (res.next()) {
+
+				// Retrieve by column name
+				Aeroport aeroport = new Aeroport(res.getString("IdAeroport"),
+						res.getString("NomAeroport"), res.getString("NomVilleDesservie"));
+
+				listeAeroports.add(aeroport);
 			}
 
-			rs.close();
-			stmt.close();
+			res.close();
 			conn.close();
-		} catch (SQLException se) {
-			se.printStackTrace();
-		} catch (Exception e) {
+
+		} catch (SQLException e) {
+
 			e.printStackTrace();
+		}
+		return listeAeroports;
+	}
+
+		/**
+	 * @param id
+	 * @return ArrayList<Aeroport>
+	 */
+	@Override
+	public ArrayList<Aeroport> search(Object id) {
+		
+		String idSearch = String.valueOf(id);
+		
+		Aeroport aeroport = null;
+
+		System.out.println("idSearch : " + idSearch);
+
+
+		Connection conn = null;
+		PreparedStatement stmt = null;
+
+		ArrayList<Aeroport> listeAeroports = new ArrayList<>();
+
+		String sql = "SELECT * FROM `AEROPORT` WHERE IdAeroport LIKE '" + idSearch + "%'";
+
+		try {
+
+			conn = ConnectionBdd.getConnection();
+			stmt = conn.prepareStatement(sql);
+
+			ResultSet res = stmt.executeQuery(sql);
+
+			System.out.println("Voici les informations de l'aeroport " + id);
+
+			while (res.next()) {
+
+				aeroport = new Aeroport(res.getString("IdAeroport"), res.getString("NomAeroport"),
+						res.getString("NomVilleDesservie"));
+
+				listeAeroports.add(aeroport);
+			}
+
+			res.close();
+			conn.close();
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+		return listeAeroports;
+	}
+
+	/**
+	 * @param id
+	 * @return Object
+	 */
+	@Override
+	public Object get(Object id) {
+
+		Aeroport aeroport = null;
+		String idSearch = String.valueOf(id);
+
+		Connection conn = null;
+		PreparedStatement stmt = null;
+
+		String sql = "SELECT * FROM `AEROPORT` WHERE IdAeroport=?";
+
+		try {
+
+			conn = ConnectionBdd.getConnection();
+			stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+			stmt.setString(1, idSearch);
+
+			ResultSet res = stmt.executeQuery();
+
+			System.out.println("Voici les informations de l'aeroport " + id);
+
+			while (res.next()) {
+
+				aeroport = new Aeroport(res.getString("IdAeroport"), res.getString("NomAeroport"),
+						res.getString("NomVilleDesservie"));
+			}
+
+			res.close();
+			conn.close();
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+		return aeroport;
+	}
+
+
+	/**
+	 * @param t
+	 * @param params
+	 */
+	@Override
+	public void save(Object t, String[] params) {
+
+		Aeroport aeroport = (Aeroport) t;
+
+		Connection conn = null;
+		PreparedStatement stmt = null;
+
+		String sql =
+				"INSERT INTO `AEROPORT` (IdAeroport,NomAeroport,NomVilleDesservie) VALUES (?,?,?)";
+
+		try {
+
+			conn = ConnectionBdd.getConnection();
+			stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			stmt.setString(1, params[0]);
+			stmt.setString(2, params[1]);
+			stmt.setString(3, params[2]);
+
+			stmt.execute();
+
+			System.out.println(aeroport.getNomAeroport() + " a bien été ajouté");
+
+			new SDialog("Ajout", "Ajouter reussie", "Valider", "").setVisible(true);
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+			new SDialog("Echec", "L'ajout n'a pas reussie car " + e, "ok", "").setVisible(true);
+
 		}
 	}
 
+	/**
+	 * @param t
+	 * @param params
+	 */
 	@Override
-	public Optional<Aeroport> get(long id) {
+	public void update(Object t, String[] params) {
 
-		return Optional.ofNullable(aeroports.get((int) id));
+		Aeroport aeroport = (Aeroport) t;
+
+		Connection conn = null;
+		PreparedStatement stmt = null;
+
+		String sql = "UPDATE `AEROPORT` SET NomAeroport=?,NomVilleDesservie=? WHERE IdAeroport=?";
+
+		try {
+
+			conn = ConnectionBdd.getConnection();
+
+			stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+			stmt.setString(1, params[1]);
+			stmt.setString(2, params[2]);
+			stmt.setString(3, aeroport.getIdAeroport());
+			stmt.executeUpdate();
+
+			System.out.println(aeroport.getIdAeroport() + " a bien �t� modifi�");
+
+		} catch (SQLException e) {
+
+			new SDialog("Echec", "La modification n'a pas reussie car " + e, "ok", "")
+					.setVisible(true);
+
+			throw new RuntimeException(e);
+		}
 	}
 
+	/**
+	 * @param t
+	 */
 	@Override
-	public List<Aeroport> getAll() {
-		return aeroports;
+	public void delete(Object t) {
+
+		Aeroport aeroport = (Aeroport) t;
+
+		System.out.println("delete aeroport : " + aeroport.getNomAeroport());
+
+		Connection conn = null;
+		PreparedStatement stmt = null;
+
+		String sql = "DELETE FROM `AEROPORT` WHERE IdAeroport=?";
+
+		try {
+			conn = ConnectionBdd.getConnection();
+			stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			stmt.setString(1, aeroport.getIdAeroport());
+
+			stmt.execute();
+
+			System.out.println(aeroport.getIdAeroport() + " a bien �t� supprim�");
+
+			new SDialog("Suppresssion", "Suppresssion reussie", "Valider", "").setVisible(true);
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+			new SDialog("Echec", "La suppresssion n'a pas reussie car " + e, "ok", "")
+					.setVisible(true);
+
+		}
+
+		try {
+
+			stmt.close();
+			conn.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
-
-	@Override
-	public void save(Aeroport aeroport) {
-		aeroports.add(aeroport);
-	}
-
-	@Override
-	public void update(Aeroport aeroport, String[] params) {
-
-		aeroport.setIdAeroport(Objects.requireNonNull(params[0], "idAeroport cannot be null"));
-		aeroport.setNomAeroport(params[1]);
-		aeroport.setNomVilleDesservie(params[2]);
-
-		aeroports.add(aeroport);
-	}
-
-	@Override
-	public void delete(Aeroport aeroport) {
-		aeroports.remove(aeroport);
-	}
-
 }

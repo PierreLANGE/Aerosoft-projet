@@ -1,43 +1,71 @@
-package Models;
+package models;
+
 
 public class Avion {
-	private Integer nunAvion;
-	private String TypeAvion;
-	private String BaseAeroport;
+	// Creation des variables
+	private int numAvion;
+	private String typeAvion;
+	private String baseAeroport;
 	
-	public Avion() {
-		super();
+	// Creation des constructeur
+	public Avion() {	
 	}
 	
-	public Avion(Integer nunAvion, String typeAvion, String baseAeroport) {
-		super();
-		this.nunAvion = nunAvion;
-		TypeAvion = typeAvion;
-		BaseAeroport = baseAeroport;
+	public Avion(int numAvion, String typeAvion, String baseAeroport) {
+		this.setNumAvion(numAvion);
+		this.setTypeAvion(typeAvion);
+		this.setBaseAeroport(baseAeroport);
 	}
 
-	public Integer getNunAvion() {
-		return nunAvion;
+	
+	/** 
+	 * @return int
+	 */
+	// Creation des getter et setter
+	public int getNumAvion() {
+		return numAvion;
+	}
+	
+	/** 
+	 * @param numAvion
+	 */
+	public void setNumAvion(int numAvion) {
+		this.numAvion = numAvion;
 	}
 
-	public void setNunAvion(Integer nunAvion) {
-		this.nunAvion = nunAvion;
-	}
-
+	
+	/** 
+	 * @return String
+	 */
 	public String getTypeAvion() {
-		return TypeAvion;
+		return typeAvion;
 	}
 
+	
+	/** 
+	 * @param typeAvion
+	 */
 	public void setTypeAvion(String typeAvion) {
-		TypeAvion = typeAvion;
+		this.typeAvion = typeAvion;
 	}
 
+	
+	/** 
+	 * @return String
+	 */
 	public String getBaseAeroport() {
-		return BaseAeroport;
+		return baseAeroport;
 	}
 
+	
+	/** 
+	 * @param baseAeroport
+	 */
 	public void setBaseAeroport(String baseAeroport) {
-		BaseAeroport = baseAeroport;
+		this.baseAeroport = baseAeroport;
 	}
+	
 	
 }
+
+

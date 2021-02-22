@@ -1,123 +1,267 @@
-package Dao;
+package dao;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import connexion.ConnectionBdd;
+import interfaces.Dao;
+import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
+import models.*;
+import vues.SDialog;
 
-import Interfaces.Dao;
+public class VolDao implements Dao {
 
-import Models.Vol;
-import compAero.Services;
-
-public class VolDao implements Dao<VolDao> {
-	
-	Services s = new Services();
-	
-	private List<Vol> vols = new ArrayList<>();
-	
-	public List<Vol> getVols() {
-		return vols;
-	}
-
-	public void setVols(List<Vol> vols) {
-		this.vols = vols;
-	}
-	
-	public int getRowCountVols() {
-		return vols.size();
-	}
-	
-	public List<Vol> getVolInVols(String searchedVol) {
-		
-		Predicate<Vol> volfind = vol -> vol.getNumVol().equals(searchedVol);
-		
-		return vols.stream().filter(volfind).collect(Collectors.toList());
-	}
-	
 	public VolDao() {
+	}
 
-		super();
-		Connection conn = null;
-		Statement stmt = null;
-		conn = s.getConn(conn);
-		stmt = s.getStmt(stmt, conn);	
-		
-	
-		final String sql = "SELECT Vol.NumVol,(Select NomAeroprt from Aeroport WHERE Aeroport.idAeroport=Vol.AeroportDept) as AeroportDept,Vol.HDepart,(Select NomAeroprt from Aeroport WHERE Aeroport.idAeroport=Vol.AeroportArr) as AeroportArr,Vol.HArrivee FROM Vol";
-		
-		
+	/**
+	 * @param id
+	 * @return ArrayList<Vol>
+	 */
+	@Override
+	public ArrayList<Vol> search(Object id) {
+
+		String idSearch = String.valueOf(id);
+
 		Vol vol = null;
-		
-		try {
-			ResultSet rs = stmt.executeQuery(sql);
-			
-			while (rs.next()) {
-				/*
-				 	private String numVol;
-					private String aeroportDept;
-					private LocalTime hDepart;
-					private String aeroportArr;
-					private LocalTime hArrivee; 
-				 */
-				vol = new Vol();
-				
-				vol.setNumVol(rs.getString(1));
-				vol.setAeroportDept(rs.getString(2));
-				vol.sethDepart(rs.getString(3));	
-				vol.setAeroportArr(rs.getString(4));
-				vol.sethArrivee(rs.getString(5));
 
-				this.vols.add(vol);
+		Connection conn = null;
+		PreparedStatement stmt = null;
+
+		ArrayList<Vol> listeVols = new ArrayList<>();
+
+		String sql = "SELECT * FROM `VOL` WHERE NumVol LIKE '" + idSearch + "%'";
+
+		try {
+
+			conn = ConnectionBdd.getConnection();
+			stmt = conn.prepareStatement(sql);
+			
+			System.out.println("Voici les informations du vol " + idSearch);
+			ResultSet res = stmt.executeQuery(sql);
+
+			while (res.next()) {
+
+				vol = new Vol(res.getString("NumVol"), res.getString("AeroportDept"),
+						res.getString("HDepart"), res.getString("AeroportArr"),
+						res.getString("HArrivee"));
+
+				listeVols.add(vol);
 			}
 
-			rs.close();
+			res.close();
+			conn.close();
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+
+		return listeVols;
+	}
+
+	/**
+	 * @param id
+	 * @return Object
+	 */
+	@Override
+	public Object get(Object id) {
+
+		Vol vol = null;
+
+		Connection conn = null;
+		PreparedStatement stmt = null;
+
+		String sql = "SELECT * FROM `VOL` WHERE NumVol=?";
+
+		try {
+
+			conn = ConnectionBdd.getConnection();
+			stmt = conn.prepareStatement(sql);
+			stmt.setObject(1, id);
+
+			System.out.println("Voici les informations du vol " + id);
+			ResultSet res = stmt.executeQuery();
+
+			while (res.next()) {
+
+				vol = new Vol(res.getString("NumVol"), res.getString("AeroportDept"),
+						res.getString("HDepart"), res.getString("AeroportArr"),
+						res.getString("HArrivee"));
+			}
+
+			res.close();
+			conn.close();
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+
+		return vol;
+	}
+
+	/**
+	 * @return ArrayList<Vol>
+	 */
+	@Override
+	public ArrayList<Vol> getAll() {
+
+		Connection conn = null;
+		PreparedStatement stmt = null;
+
+		String sql = "SELECT * FROM `VOL`";
+
+		ArrayList<Vol> listeVols = new ArrayList<>();
+
+		try {
+			conn = ConnectionBdd.getConnection();
+			stmt = conn.prepareStatement(sql);
+			ResultSet res = stmt.executeQuery(sql);
+
+			while (res.next()) {
+
+				Vol vol = new Vol(res.getString("NumVol"), res.getString("AeroportDept"),
+						res.getString("HDepart"), res.getString("AeroportArr"),
+						res.getString("HArrivee"));
+
+				listeVols.add(vol);
+			}
+
+			res.close();
+			conn.close();
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+			throw new RuntimeException(e);
+
+		}
+
+		return listeVols;
+	}
+
+	/**
+	 * @param t
+	 * @param params
+	 */
+	@Override
+	public void save(Object t, String[] params) {
+
+		Vol vol = (Vol) t;
+
+		Connection conn = null;
+		PreparedStatement stmt = null;
+
+		String sql =
+				"INSERT INTO `VOL` (NumVol, AeroportDept, HDepart, AeroportArr, HArrivee) VALUES (?,?,?,?,?)";
+
+		try {
+
+			conn = ConnectionBdd.getConnection();
+
+			stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+			stmt.setString(1, params[0]);
+			stmt.setString(2, params[1]);
+			stmt.setString(3, params[2]);
+			stmt.setString(4, params[3]);
+			stmt.setString(5, params[4]);
+			stmt.execute();
+
+			System.out.println(vol.getNumVol() + " a bien été ajouté");
+			new SDialog("Ajout", "Ajouter reussie", "Valider", "").setVisible(true);
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+			System.out.println("Impossible d'ajouter un Vol");
+			new SDialog("Echec", "L'ajout n'a pas reussie car " + e, "ok", "").setVisible(true);
+			throw new RuntimeException(e);
+
+		}
+	}
+
+	/**
+	 * @param t
+	 * @param params
+	 */
+	@Override
+	public void update(Object t, String[] params) {
+
+		Vol vol = (Vol) t;
+
+		Connection conn = null;
+		PreparedStatement stmt = null;
+
+		try {
+			conn = ConnectionBdd.getConnection();
+
+			stmt = conn.prepareStatement(
+					"UPDATE `VOL` SET AeroportDept=?,HDepart=?,AeroportArr=?,HArrivee=? WHERE NumVol=?");
+
+			stmt.setString(1, params[1]);
+			stmt.setString(2, params[2]);
+			stmt.setString(3, params[3]);
+			stmt.setString(4, params[4]);
+			stmt.setString(5, vol.getNumVol());
+
+			stmt.executeUpdate();
+
+		} catch (SQLException e) {
+
+			new SDialog("Echec", "La modification n'a pas reussie car " + e, "ok", "")
+					.setVisible(true);
+
+			throw new RuntimeException(e);
+
+		}
+	}
+
+	/**
+	 * @param t
+	 */
+	@Override
+	public void delete(Object t) {
+
+		Vol vol = (Vol) t;
+
+		Connection conn = null;
+		PreparedStatement stmt = null;
+
+		try {
+
+			conn = ConnectionBdd.getConnection();
+
+			stmt = conn.prepareStatement("DELETE FROM `VOL` WHERE `NumVol`=?",
+					Statement.RETURN_GENERATED_KEYS);
+
+			stmt.setString(1, vol.getNumVol());
+
+			stmt.execute();
+
+			System.out.println(vol.getNumVol() + " a bien été Supprimé");
+			new SDialog("Suppresssion", "Suppresssion reussie", "Valider", "").setVisible(true);
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+			new SDialog("Echec", "La suppresssion n'a pas reussie car " + e, "ok", "")
+					.setVisible(true);
+
+			throw new RuntimeException(e);
+
+		}
+
+		try {
+
 			stmt.close();
 			conn.close();
-			
-		} catch (SQLException se) {
-			se.printStackTrace();
-		} catch (Exception e) {
+
+		} catch (SQLException e) {
+
 			e.printStackTrace();
+			
 		}
-		System.out.println("nb enr in vols on constructor:" +
-		this.vols.size());
 	}
-	@Override
-	public Optional<VolDao> get(long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<VolDao> getAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void save(VolDao t) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void update(VolDao v, String[] params) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void delete(VolDao v) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-
 }

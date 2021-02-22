@@ -1,44 +1,59 @@
-package Models;
+package models;
 
 public class Aeroport {
-
 	private String idAeroport;
 	private String nomAeroport;
-	private String nomVilleDesservie;
+	private String nomVille;
 	
 	public Aeroport() {
-		super();
+	}
+	public Aeroport(String idAeroport, String nomAeroport, String nomVille) {
+		this.setIdAeroport(idAeroport);
+		this.setNomAeroport(nomAeroport);
+		this.setNomVille(nomVille);
 	}
 	
-	public Aeroport(String idAeroport, String nomAeroport, String nomVilleDesservie) {
-		super();
-		this.idAeroport = idAeroport;
-		this.nomAeroport = nomAeroport;
-		this.nomVilleDesservie = nomVilleDesservie;
-	}
-
+	/** 
+	 * @return String
+	 */
 	public String getIdAeroport() {
 		return idAeroport;
 	}
-
+	
+	/** 
+	 * @param idAeroport
+	 */
 	public void setIdAeroport(String idAeroport) {
 		this.idAeroport = idAeroport;
 	}
-
+	
+	/** 
+	 * @return String
+	 */
 	public String getNomAeroport() {
 		return nomAeroport;
 	}
-
+	
+	/** 
+	 * @param nomAeroport
+	 */
 	public void setNomAeroport(String nomAeroport) {
 		this.nomAeroport = nomAeroport;
 	}
-
-	public String getNomVilleDesservie() {
-		return nomVilleDesservie;
+	
+	/** 
+	 * @return String
+	 */
+	public String getNomVille() {
+		return nomVille;
 	}
-
-	public void setNomVilleDesservie(String nomVilleDesservie) {
-		this.nomVilleDesservie = nomVilleDesservie;
+	
+	/** 
+	 * @param nomVille
+	 */
+	public void setNomVille(String nomVille) {
+		this.nomVille = nomVille;
 	}
+	
 
 }

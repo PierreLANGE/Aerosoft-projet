@@ -1,75 +1,90 @@
-package Models;
-
-import java.sql.Time;
-import java.time.LocalTime;
+package models;
 
 public class Vol {
 	private String numVol;
-	private String aeroportDept;
-	private LocalTime hDepart;
-	private String aeroportArr;
-	private LocalTime hArrivee;
-
+	private String aeroportDepart;
+	private String heureDepart;
+	private String aeroportArrive;
+	private String heureArrive;
+	
 	public Vol() {
-		super();
 	}
-
-	public Vol(String numVol, String aeroportDept, LocalTime hDepart, String aeroportArr, LocalTime hArrivee) {
-		super();
-		this.numVol = numVol;
-		this.aeroportDept = aeroportDept;
-		this.hDepart = hDepart;
-		this.aeroportArr = aeroportArr;
-		this.hArrivee = hArrivee;
+	public Vol(String numVol, String aeroportDepart, String heureDepart, String aeroportArrive, String heureArrive) {
+		this.setNumVol(numVol);
+		this.setAeroprtDepart(aeroportDepart);
+		this.setHeureDepart(heureDepart);
+		this.setAeroportArrive(aeroportArrive);
+		this.setHeureArrive(heureArrive);
 	}
-
+	
+	/** 
+	 * @return String
+	 */
 	public String getNumVol() {
 		return numVol;
 	}
-
+	
+	/** 
+	 * @param numVol
+	 */
 	public void setNumVol(String numVol) {
 		this.numVol = numVol;
 	}
-
-	public String getAeroportDept() {
-		return aeroportDept;
-	}
-
-	public void setAeroportDept(String aeroportDept) {
-		this.aeroportDept = aeroportDept;
-	}
-
-	public LocalTime gethDepart() {
-		return hDepart;
-	}
-
-	public void sethDepart(String hDepart) {
-		
-		this.hDepart = LocalTime.parse(hDepart);
+	
+	/** 
+	 * @return String
+	 */
+	public String getAeroportDepart() {
+		return aeroportDepart;
 	}
 	
-	public void sethDepart(LocalTime hDepart) {
-		
-		this.hDepart = hDepart;
-	}
-
-	public String getAeroportArr() {
-		return aeroportArr;
-	}
-
-	public void setAeroportArr(String aeroportArr) {
-		this.aeroportArr = aeroportArr;
-	}
-
-	public LocalTime gethArrivee() {
-		return hArrivee;
-	}
-
-	public void sethArrivee(String hArrivee) {
-		this.hArrivee = LocalTime.parse(hArrivee);
+	/** 
+	 * @param aeroportDepart
+	 */
+	public void setAeroprtDepart(String aeroportDepart) {
+		this.aeroportDepart = aeroportDepart;
 	}
 	
-	public void sethArrivee(LocalTime hArrivee) {
-		this.hArrivee = hArrivee;
+	/** 
+	 * @return String
+	 */
+	public String getHeureDepart() {
+		return heureDepart;
 	}
+	
+	/** 
+	 * @param heureDepart
+	 */
+	public void setHeureDepart(String heureDepart) {
+		this.heureDepart = heureDepart;
+	}
+	
+	/** 
+	 * @return String
+	 */
+	public String getAeroportArrive() {
+		return aeroportArrive;
+	}
+	
+	/** 
+	 * @param aeroportArrive
+	 */
+	public void setAeroportArrive(String aeroportArrive) {
+		this.aeroportArrive = aeroportArrive;
+	}
+	
+	/** 
+	 * @return String
+	 */
+	public String getHeureArrive() {
+		return heureArrive;
+	}
+	
+	/** 
+	 * @param heureArrive
+	 */
+	public void setHeureArrive(String heureArrive) {
+		this.heureArrive = heureArrive;
+	}
+	
 }

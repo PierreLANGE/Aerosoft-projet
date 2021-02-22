@@ -1,149 +1,342 @@
-package Dao;
+package dao;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
-import Interfaces.Dao;
-import Models.Aeroport;
-import Models.Affectation;
-import Models.Pilote;
-import compAero.Services;
+import models.*;
+import vues.SDialog;
+import connexion.ConnectionBdd;
+import interfaces.Dao;
 
-public class AffectationDao implements Dao<Affectation> {
-
-	Services s = new Services();
-
-	private List<Affectation> affectations = new ArrayList<>();
-
-	public List<Affectation> getAffectations() {
-		return affectations;
-	}
-
-	public void setAffectations(List<Affectation> affectations) {
-		this.affectations = affectations;
-	}
+public class AffectationDao implements Dao {
 
 	public AffectationDao() {
+	}
 
-		super();
+		/**
+	 * @param id
+	 * @return ArrayList<Affectation>
+	 */
+	@Override
+	public ArrayList<Affectation> search(Object id) {
+
+		Affectation affectation = new Affectation();
+
+		// Transformer l'object 'id' en String pour l'envoyer dans la requete
+		String idSearch = String.valueOf(id);
+
 		Connection conn = null;
-		Statement stmt = null;
-		conn = s.getConn(conn);
-		stmt = s.getStmt(stmt, conn);
-		final String sql = "SELECT " + "Affectation.NumVol," + "Affectation.DateVol," + "Affectation.NumAvion, "
-				+ "Affectation.idPilote, "
-				+ "(Select PrenomPilote from Pilote WHERE  Pilote.idPilote = Affectation.idPilote) as PrenomPilote,"
-				+ "(Select NomPilote from Pilote WHERE  Pilote.idPilote = Affectation.idPilote) as NomPilote "
-				+ "from Affectation";
+		PreparedStatement stmt = null;
 
-		Affectation affectation = null;
+		ArrayList<Affectation> listeAffectations = new ArrayList<>();
+
+		String sql = "SELECT " + "affectation.IdAffectation," + "affectation.NumVol,"
+				+ "affectation.DateVol," + "affectation.affectationCode," + "affectation.NumAvion, "
+				+ "affectation.idPilote, "
+				+ "(Select PrenomPilote FROM `PILOTE` as pilote WHERE pilote.idPilote = affectation.idPilote) as PrenomPilote,"
+				+ "(Select NomPilote FROM `PILOTE` as pilote WHERE  pilote.idPilote = affectation.idPilote) as NomPilote "
+				+ " FROM `AFFECTATION` as affectation WHERE affectation.IdAffectation LIKE '" + idSearch + "%'";
 
 		try {
+
+			conn = ConnectionBdd.getConnection();
+			stmt = conn.prepareStatement(sql);
+
+			ResultSet res = stmt.executeQuery(sql);
+
+			while (res.next()) {
+
+				affectation.setId(res.getString(1));
+				affectation.setNumVol(res.getString(2));
+				affectation.setDateVol(res.getDate(3));
+				affectation.setAffectationCode(res.getBoolean(4));
+				affectation.setNumAvion(res.getInt(5));
+
+				Pilote pilote = new Pilote();
+
+				pilote.setIdPilote(res.getInt(6));
+				pilote.setPrenomPilote(res.getString(7));
+				pilote.setNomPilote(res.getString(8));
+
+				affectation.setPilote(pilote);
+
+				listeAffectations.add(affectation);
+
+			}
+
+			res.close();
+			conn.close();
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+
+		return listeAffectations;
+	}
+
+	/**
+	 * @param id
+	 * @return Object
+	 */
+	@Override
+	public Object get(Object id) {
+
+		Affectation affectation = new Affectation();
+
+		// Transformer l'object 'id' en String pour l'envoyer dans la requete
+		String idSearch = String.valueOf(id);
+
+		Connection conn = null;
+		PreparedStatement stmt = null;
+
+		String sql = "SELECT " + "affectation.IdAffectation," + "affectation.NumVol,"
+				+ "affectation.DateVol," + "affectation.affectationCode," + "affectation.NumAvion, "
+				+ "affectation.idPilote, "
+				+ "(Select PrenomPilote FROM `PILOTE` as pilote WHERE pilote.idPilote = affectation.idPilote) as PrenomPilote,"
+				+ "(Select NomPilote FROM `PILOTE` as pilote WHERE  pilote.idPilote = affectation.idPilote) as NomPilote "
+				+ " FROM `AFFECTATION` as affectation WHERE affectation.IdAffectation=?";
+
+		try {
+
+			conn = ConnectionBdd.getConnection();
+			stmt = conn.prepareStatement(sql);
+
+			stmt.setString(1, idSearch);
+
+			ResultSet res = stmt.executeQuery();
+
+			while (res.next()) {
+
+				affectation.setId(res.getString(1));
+				affectation.setNumVol(res.getString(2));
+				affectation.setDateVol(res.getDate(3));
+				affectation.setAffectationCode(res.getBoolean(4));
+				affectation.setNumAvion(res.getInt(5));
+
+				Pilote pilote = new Pilote();
+
+				pilote.setIdPilote(res.getInt(6));
+				pilote.setPrenomPilote(res.getString(7));
+				pilote.setNomPilote(res.getString(8));
+
+				affectation.setPilote(pilote);
+			}
+
+			res.close();
+			conn.close();
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+
+		return affectation;
+	}
+
+	/**
+	 * @return ArrayList<Affectation>
+	 */
+	@Override
+	public ArrayList<Affectation> getAll() {
+
+		Connection conn = null;
+		PreparedStatement stmt = null;
+
+		String sql = "SELECT " + "affectation.IdAffectation," + "affectation.NumVol,"
+				+ "affectation.affectationCode," + "affectation.DateVol," + "affectation.NumAvion, "
+				+ "affectation.idPilote, "
+				+ "(Select PrenomPilote FROM `PILOTE` as pilote WHERE  pilote.idPilote = affectation.idPilote) as PrenomPilote,"
+				+ "(Select NomPilote FROM `PILOTE` as pilote WHERE  pilote.idPilote = affectation.idPilote) as NomPilote "
+				+ "FROM `AFFECTATION` as affectation";
+
+		ArrayList<Affectation> listeAffectations = new ArrayList<>();
+
+		try {
+
+			conn = ConnectionBdd.getConnection();
+			stmt = conn.prepareStatement(sql);
+
 			ResultSet rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
-				affectation = new Affectation();
 
-				affectation.setNumVol(rs.getString(1));
-				affectation.setDateVol(rs.getDate(2));
-				affectation.setNumAvion(rs.getString(3));
+				Affectation affectation = new Affectation();
+
+				affectation.setId(rs.getString(1));
+				affectation.setNumVol(rs.getString(2));
+				affectation.setAffectationCode(rs.getBoolean(3));
+				affectation.setDateVol(rs.getDate(4));
+				affectation.setNumAvion(rs.getInt(5));
 
 				Pilote p = new Pilote();
 
-				p.setIdPilote(rs.getInt(4));
-				p.setPrenomPilote(rs.getString(5));
-				p.setNomPilote(rs.getString(6));
+				p.setIdPilote(rs.getInt(6));
+				p.setPrenomPilote(rs.getString(7));
+				p.setNomPilote(rs.getString(8));
 
 				affectation.setPilote(p);
 
-				this.affectations.add(affectation);
+				listeAffectations.add(affectation);
 			}
 
 			rs.close();
+			conn.close();
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+			System.out.println("Impossible d'afficher les affectations");
+			throw new RuntimeException(e);
+
+		}
+
+		return listeAffectations;
+	}
+
+
+	/**
+	 * @param t
+	 * @param params
+	 */
+	@Override
+	public void save(Object t, String[] params) {
+
+		Affectation affectation = (Affectation) t;
+
+		PiloteDao pda = new PiloteDao();
+
+		Connection conn = null;
+		PreparedStatement stmt = null;
+
+		String sql =
+				"INSERT INTO `AFFECTATION` (IdAffectation,NumVol,DateVol,AffectationCode,NumAvion,IdPilote) VALUES (?,?,?,?,?,?)";
+
+		try {
+
+			conn = ConnectionBdd.getConnection();
+
+			stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+			stmt.setString(1, params[1] + params[2]);
+			stmt.setString(2, params[1]);
+			stmt.setDate(3, Date.valueOf(params[2]));
+			stmt.setBoolean(4, Boolean.parseBoolean(params[3]));
+			stmt.setInt(5, Integer.parseInt(params[4]));
+			stmt.setInt(6, pda.getIdByName(params[5]));
+
+			stmt.execute();
+
+			System.out.println(affectation.getId() + "L'affectation à bien été ajouté");
+			new SDialog("Ajout", "L'ajout de l'affectation à reussie", "Valider", "")
+					.setVisible(true);
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+			System.out.println("Impossible d'ajouter une affectation");
+			new SDialog("Echec", "L'ajout n'a pas reussie car " + e, "ok", "").setVisible(true);
+			throw new RuntimeException(e);
+
+		}
+	}
+
+	/**
+	 * @param t
+	 * @param params
+	 */
+	@Override
+	public void update(Object t, String[] params) {
+
+		PiloteDao pda = new PiloteDao();
+
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql =
+				"UPDATE `AFFECTATION` SET NumVol=?, DateVol=?,AffectationCode=? , NumAvion=?, IdPilote=? WHERE IdAffectation=?";
+
+		try {
+
+			conn = ConnectionBdd.getConnection();
+			stmt = conn.prepareStatement(sql);
+
+			stmt.setString(1, params[1]);
+			stmt.setDate(2, Date.valueOf(params[2]));
+			stmt.setBoolean(3, Boolean.parseBoolean(params[3]));
+			stmt.setInt(4, Integer.parseInt(params[4]));
+			stmt.setInt(5, pda.getIdByName(params[5]));
+			stmt.setString(6, params[0]);
+
+			stmt.executeUpdate();
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+			new SDialog("Echec", "La modification n'a pas reussie car " + e, "ok", "")
+					.setVisible(true);
+
+			throw new RuntimeException(e);
+		}
+
+		try {
+
 			stmt.close();
 			conn.close();
-		} catch (SQLException se) {
-			se.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		// System.out.println("nb enr in affectations on constructor:" +
-		// this.affectations.size());
-	}
 
-	@Override
-	public Optional<Affectation> get(long id) {
-
-		return Optional.ofNullable(affectations.get((int) id));
-	}
-
-	@Override
-	public List<Affectation> getAll() {
-		return affectations;
-	}
-
-	@Override
-	public void save(Affectation affectation) {
-		affectations.add(affectation);
-	}
-
-	@Override
-	public void update(Affectation affectation, String[] params) {
-
-		affectation.setDateVol(java.sql.Date.valueOf(params[0]));
-
-		Connection conn = null;
-		Statement stmt = null;
-		conn = s.getConn(conn);
-		stmt = s.getStmt(stmt, conn);
-
-		Pilote p = affectation.getPilote();
-
-		String requete = "UPDATE Affectation SET DateVol='" + affectation.getDateVol() + "' WHERE NumVol='"
-				+ affectation.getNumVol() + "' and NumAvion='" + affectation.getNumAvion() + "'" + " and idPilote="
-				+ p.getIdPilote();
-
-		System.out.println("requete on update AffectationDao: " + requete);
-
-		try {
-			
-			stmt.executeUpdate(requete);
-			
 		} catch (SQLException e) {
 
 			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
-
 	}
 
+	/**
+	 * @param t
+	 */
 	@Override
-	public void delete(Affectation affectation) {
+	public void delete(Object t) {
+
+		Affectation affectation = (Affectation) t;
+
 		Connection conn = null;
-		Statement stmt = null;
-		conn = s.getConn(conn);
-		stmt = s.getStmt(stmt, conn);
-
-		Pilote p = affectation.getPilote();
-
-		String requete = "delete from Affectation WHERE NumVol='" + affectation.getNumVol() + "' and NumAvion='"
-				+ affectation.getNumAvion() + "'" + " and idPilote=" + p.getIdPilote();
-
-		System.out.println("requete on update AffectationDao: " + requete);
+		PreparedStatement stmt = null;
 
 		try {
-			stmt.executeUpdate(requete);
+			conn = ConnectionBdd.getConnection();
+
+
+			stmt = conn.prepareStatement(
+					"UPDATE `AFFECTATION` SET AffectationCode=false WHERE IdAffectation=?",
+					Statement.RETURN_GENERATED_KEYS);
+
+			stmt.setString(1, affectation.getId());
+			stmt.execute();
+
+			new SDialog("Suppresssion", "Suppresssion reussie", "Valider", "").setVisible(true);
+
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
+			new SDialog("Echec", "La suppresssion n'a pas reussie car " + e, "ok", "")
+					.setVisible(true);
+
+			throw new RuntimeException(e);
+
 		}
 
-		affectations.remove(affectation);
-	}
+		try {
 
+			stmt.close();
+			conn.close();
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+			throw new RuntimeException(e);
+			
+		}
+
+	}
 }

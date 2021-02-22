@@ -1,17 +1,18 @@
-package Interfaces;
+package interfaces;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.ArrayList;
 
-public interface Dao<T> {
+public interface Dao {
+    
+    Object get(Object id);
 
-    Optional<T> get(long id);
-
-    List<T> getAll();
-
-    void save(T t);
-
-    void update(T t, String[]params);
-
-    void delete(T t);
+    ArrayList search(Object id);
+    
+    ArrayList getAll();
+    
+    void save(Object t, String[] params);
+    
+    void update(Object t, String[] params);
+    
+    void delete(Object t);
 }
