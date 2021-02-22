@@ -1,0 +1,29 @@
+%%mocodo
+:::
+UTILISATEUR: IdUtilisateur, Mail, MotDePasse, Statut, #IdRole->ROLES->IdRole
+:::
+ROLES: IdRole, RoleNom
+:::
+
+
+:
+VOL: NumVol, AeroportDept, Hdepart, AeroportArr, Harrivée, #IdAeroport->AEROPORT->IdAeroport
+:::
+AEROPORT: IdAeroport, NomAeroport, NomVilleDesservie
+:::
+CONSTRUCTEUR: IdConstructeur, NomConstructeur
+:
+
+
+:::
+AFFECTATION: IdAffectation, DateVol, AffectationCode, #NumAvion->AVION->NumAvion, #NumVol->VOL->NumVol, #IdPilote->PILOTE->IdPilote
+:::
+AVION: NumAvion, #IdAeroport->AEROPORT->IdAeroport, #TypeAvion->DETAILAVION->TypeAvion
+:::
+
+
+:::::
+PILOTE: IdPilote, NomPilote, PrenomPilote, Matricule
+:::
+DETAILAVION: TypeAvion, Capacite, #IdConstructeur->CONSTRUCTEUR->IdConstructeur
+:

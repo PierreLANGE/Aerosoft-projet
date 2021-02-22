@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>Aerosoft-projet</name>
+	<name>jdbc-1</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -16,19 +16,7 @@
 	</natures>
 	<filteredResources>
 		<filter>
-<<<<<<< HEAD
-			<id>1613064269898</id>
-=======
-<<<<<<< HEAD
-			<id>1613030263214</id>
-=======
-<<<<<<< HEAD
-			<id>1613030625842</id>
-=======
-			<id>1613030708120</id>
->>>>>>> 4a423f858091ccfa46ee8996e0018b4bb6364f6b
->>>>>>> 7febe72bc3260ab40467986e8e50524187db7e59
->>>>>>> 52e5b67bd71f296a8921d577954e31cda5defdc5
+			<id>1610556501872</id>
 			<name></name>
 			<type>30</type>
 			<matcher>

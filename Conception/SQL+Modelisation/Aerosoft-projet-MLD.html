@@ -1,0 +1,84 @@
+<html>
+<head>
+<meta charset='utf-8'>
+<style>
+  #mld .relation { font-variant: small-caps; font-weight: bold }
+  #mld .primary { text-decoration: underline }
+  #mld .foreign { font-style: oblique }
+</style>
+</head>
+<body>
+<div id='mld'>
+<div>
+  <span class='relation'>UTILISATEUR</span> (
+    <span class='primary'>IdUtilisateur</span>,
+    <span class='normal'>Mail</span>,
+    <span class='normal'>MotDePasse</span>,
+    <span class='normal'>Statut</span>,
+    <span class='foreign'>IdRole</span>
+  )
+</div>
+<div>
+  <span class='relation'>ROLES</span> (
+    <span class='primary'>IdRole</span>,
+    <span class='normal'>RoleNom</span>
+  )
+</div>
+<div>
+  <span class='relation'>VOL</span> (
+    <span class='primary'>NumVol</span>,
+    <span class='normal'>AeroportDept</span>,
+    <span class='normal'>Hdepart</span>,
+    <span class='normal'>AeroportArr</span>,
+    <span class='normal'>Harrivée</span>,
+    <span class='foreign'>IdAeroport</span>
+  )
+</div>
+<div>
+  <span class='relation'>AEROPORT</span> (
+    <span class='primary'>IdAeroport</span>,
+    <span class='normal'>NomAeroport</span>,
+    <span class='normal'>NomVilleDesservie</span>
+  )
+</div>
+<div>
+  <span class='relation'>CONSTRUCTEUR</span> (
+    <span class='primary'>IdConstructeur</span>,
+    <span class='normal'>NomConstructeur</span>
+  )
+</div>
+<div>
+  <span class='relation'>AFFECTATION</span> (
+    <span class='primary'>IdAffectation</span>,
+    <span class='normal'>DateVol</span>,
+    <span class='normal'>AffectationCode</span>,
+    <span class='foreign'>NumAvion</span>,
+    <span class='foreign'>NumVol</span>,
+    <span class='foreign'>IdPilote</span>
+  )
+</div>
+<div>
+  <span class='relation'>AVION</span> (
+    <span class='primary'>NumAvion</span>,
+    <span class='foreign'>IdAeroport</span>,
+    <span class='foreign'>TypeAvion</span>
+  )
+</div>
+<div>
+  <span class='relation'>PILOTE</span> (
+    <span class='primary'>IdPilote</span>,
+    <span class='normal'>NomPilote</span>,
+    <span class='normal'>PrenomPilote</span>,
+    <span class='normal'>Matricule</span>
+  )
+</div>
+<div>
+  <span class='relation'>DETAILAVION</span> (
+    <span class='primary'>TypeAvion</span>,
+    <span class='normal'>Capacite</span>,
+    <span class='foreign'>IdConstructeur</span>
+  )
+</div>
+</div>
+</body>
+</html>

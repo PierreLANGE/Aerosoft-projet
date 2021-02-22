@@ -1,0 +1,139 @@
+<html>
+<head>
+<meta charset='utf-8'>
+<style>
+  #mld .relation { font-variant: small-caps; font-weight: bold }
+  #mld .primary { text-decoration: underline }
+  #mld .foreign { font-style: oblique }
+  #mld strong { font-weight: bold }
+  #mld i { font-style: italic }
+  #mld ul { list-style-type:square; margin: 0 0 1em 2em }
+</style>
+</head>
+<body>
+<div id='mld'>
+<div>
+  <span class='relation'>UTILISATEUR</span> (
+    <span class='primary'>IdUtilisateur</span>,
+    <span class='normal'>Mail</span>,
+    <span class='normal'>MotDePasse</span>,
+    <span class='normal'>Statut</span>,
+    <span class='foreign'>IdRole</span>
+  )
+  <ul>
+    <li>Le champ <i>IdUtilisateur</i> constitue la clef primaire de la table. C'était déjà un identifiant de l'entité <i>UTILISATEUR</i>.</li>
+    <li>Les champs <i>Mail</i>, <i>MotDePasse</i> et <i>Statut</i> étaient déjà de simples attributs de l'entité <i>UTILISATEUR</i>.</li>
+    <li>Le champ <i>IdRole</i> est une clef étrangère. Il a migré à partir de l'entité <i>ROLES</i> par l'association de dépendance fonctionnelle <i>A UN</i> en perdant son caractère identifiant.</li>
+  </ul>
+</div>
+
+<div>
+  <span class='relation'>ROLES</span> (
+    <span class='primary'>IdRole</span>,
+    <span class='normal'>RoleNom</span>
+  )
+  <ul>
+    <li>Le champ <i>IdRole</i> constitue la clef primaire de la table. C'était déjà un identifiant de l'entité <i>ROLES</i>.</li>
+    <li>Le champ <i>RoleNom</i> était déjà un simple attribut de l'entité <i>ROLES</i>.</li>
+  </ul>
+</div>
+
+<div>
+  <span class='relation'>VOL</span> (
+    <span class='primary'>NumVol</span>,
+    <span class='normal'>AeroportDept</span>,
+    <span class='normal'>Hdepart</span>,
+    <span class='normal'>AeroportArr</span>,
+    <span class='normal'>Harrivée</span>,
+    <span class='foreign'>IdAeroport</span>
+  )
+  <ul>
+    <li>Le champ <i>NumVol</i> constitue la clef primaire de la table. C'était déjà un identifiant de l'entité <i>VOL</i>.</li>
+    <li>Les champs <i>AeroportDept</i>, <i>Hdepart</i>, <i>AeroportArr</i> et <i>Harrivée</i> étaient déjà de simples attributs de l'entité <i>VOL</i>.</li>
+    <li>Le champ <i>IdAeroport</i> est une clef étrangère. Il a migré à partir de l'entité <i>AEROPORT</i> par l'association de dépendance fonctionnelle <i>PART DE</i> en perdant son caractère identifiant.</li>
+  </ul>
+</div>
+
+<div>
+  <span class='relation'>AEROPORT</span> (
+    <span class='primary'>IdAeroport</span>,
+    <span class='normal'>NomAeroport</span>,
+    <span class='normal'>NomVilleDesservie</span>
+  )
+  <ul>
+    <li>Le champ <i>IdAeroport</i> constitue la clef primaire de la table. C'était déjà un identifiant de l'entité <i>AEROPORT</i>.</li>
+    <li>Les champs <i>NomAeroport</i> et <i>NomVilleDesservie</i> étaient déjà de simples attributs de l'entité <i>AEROPORT</i>.</li>
+  </ul>
+</div>
+
+<div>
+  <span class='relation'>CONSTRUCTEUR</span> (
+    <span class='primary'>IdConstructeur</span>,
+    <span class='normal'>NomConstructeur</span>
+  )
+  <ul>
+    <li>Le champ <i>IdConstructeur</i> constitue la clef primaire de la table. C'était déjà un identifiant de l'entité <i>CONSTRUCTEUR</i>.</li>
+    <li>Le champ <i>NomConstructeur</i> était déjà un simple attribut de l'entité <i>CONSTRUCTEUR</i>.</li>
+  </ul>
+</div>
+
+<div>
+  <span class='relation'>AFFECTATION</span> (
+    <span class='primary'>IdAffectation</span>,
+    <span class='normal'>DateVol</span>,
+    <span class='normal'>AffectationCode</span>,
+    <span class='foreign'>NumAvion</span>,
+    <span class='foreign'>NumVol</span>,
+    <span class='foreign'>IdPilote</span>
+  )
+  <ul>
+    <li>Le champ <i>IdAffectation</i> constitue la clef primaire de la table. C'était déjà un identifiant de l'entité <i>AFFECTATION</i>.</li>
+    <li>Les champs <i>DateVol</i> et <i>AffectationCode</i> étaient déjà de simples attributs de l'entité <i>AFFECTATION</i>.</li>
+    <li>Le champ <i>NumAvion</i> est une clef étrangère. Il a migré à partir de l'entité <i>AVION</i> par l'association de dépendance fonctionnelle <i>EST ENREGISTRE</i> en perdant son caractère identifiant.</li>
+    <li>Le champ <i>NumVol</i> est une clef étrangère. Il a migré à partir de l'entité <i>VOL</i> par l'association de dépendance fonctionnelle <i>EST AFFECTE A</i> en perdant son caractère identifiant.</li>
+    <li>Le champ <i>IdPilote</i> est une clef étrangère. Il a migré à partir de l'entité <i>PILOTE</i> par l'association de dépendance fonctionnelle <i>EST LIE A</i> en perdant son caractère identifiant.</li>
+  </ul>
+</div>
+
+<div>
+  <span class='relation'>AVION</span> (
+    <span class='primary'>NumAvion</span>,
+    <span class='foreign'>IdAeroport</span>,
+    <span class='foreign'>TypeAvion</span>
+  )
+  <ul>
+    <li>Le champ <i>NumAvion</i> constitue la clef primaire de la table. C'était déjà un identifiant de l'entité <i>AVION</i>.</li>
+    <li>Le champ <i>IdAeroport</i> est une clef étrangère. Il a migré à partir de l'entité <i>AEROPORT</i> par l'association de dépendance fonctionnelle <i>OCCUPE</i> en perdant son caractère identifiant.</li>
+    <li>Le champ <i>TypeAvion</i> est une clef étrangère. Il a migré à partir de l'entité <i>DETAILAVION</i> par l'association de dépendance fonctionnelle <i>EST</i> en perdant son caractère identifiant.</li>
+  </ul>
+</div>
+
+<div>
+  <span class='relation'>PILOTE</span> (
+    <span class='primary'>IdPilote</span>,
+    <span class='normal'>NomPilote</span>,
+    <span class='normal'>PrenomPilote</span>,
+    <span class='normal'>Matricule</span>
+  )
+  <ul>
+    <li>Le champ <i>IdPilote</i> constitue la clef primaire de la table. C'était déjà un identifiant de l'entité <i>PILOTE</i>.</li>
+    <li>Les champs <i>NomPilote</i>, <i>PrenomPilote</i> et <i>Matricule</i> étaient déjà de simples attributs de l'entité <i>PILOTE</i>.</li>
+  </ul>
+</div>
+
+<div>
+  <span class='relation'>DETAILAVION</span> (
+    <span class='primary'>TypeAvion</span>,
+    <span class='normal'>Capacite</span>,
+    <span class='foreign'>IdConstructeur</span>
+  )
+  <ul>
+    <li>Le champ <i>TypeAvion</i> constitue la clef primaire de la table. C'était déjà un identifiant de l'entité <i>DETAILAVION</i>.</li>
+    <li>Le champ <i>Capacite</i> était déjà un simple attribut de l'entité <i>DETAILAVION</i>.</li>
+    <li>Le champ <i>IdConstructeur</i> est une clef étrangère. Il a migré à partir de l'entité <i>CONSTRUCTEUR</i> par l'association de dépendance fonctionnelle <i>APPARTIENT A</i> en perdant son caractère identifiant.</li>
+  </ul>
+</div>
+
+</div>
+</body>
+</html>
