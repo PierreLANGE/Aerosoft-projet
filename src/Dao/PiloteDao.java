@@ -1,10 +1,10 @@
-package dao;
+package Dao;
 
 import connexion.ConnectionBdd;
-import interfaces.*;
+import Interfaces.*;
 import java.sql.*;
 import java.util.ArrayList;
-import models.*;
+import Models.*;
 import vues.SDialog;
 
 public class PiloteDao implements Dao {

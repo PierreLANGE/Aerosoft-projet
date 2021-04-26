@@ -9,10 +9,10 @@ import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.table.*;
 
-import dao.RoleDao;
-import dao.UtilisateurDao;
-import models.Role;
-import models.Utilisateur;
+import Dao.RoleDao;
+import Dao.UtilisateurDao;
+import Models.Role;
+import Models.Utilisateur;
  
 public class TableRole extends JFrame{
 

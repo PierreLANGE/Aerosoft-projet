@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
-import dao.*;
-import models.*;
+import Dao.*;
+import Models.*;
 import vues.*;
 
 

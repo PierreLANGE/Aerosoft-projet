@@ -6,7 +6,7 @@ import javax.swing.JPanel;
 
 import javax.swing.border.EmptyBorder;
 
-import interfaces.Dao;
+import Interfaces.Dao;
 
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;

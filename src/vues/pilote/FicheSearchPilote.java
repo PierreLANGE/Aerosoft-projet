@@ -7,10 +7,10 @@ import java.awt.*;
 import java.awt.event.*;
 
 // import des daos
-import dao.*;
+import Dao.*;
 
-// import des models
-import models.*;
+// import des Models
+import Models.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

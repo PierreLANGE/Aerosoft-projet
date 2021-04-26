@@ -1,10 +1,10 @@
-package dao;
+package Dao;
 
 import connexion.ConnectionBdd;
-import interfaces.Dao;
+import Interfaces.Dao;
 import java.sql.*;
 import java.util.ArrayList;
-import models.*;
+import Models.*;
 public class DetailAvionDao implements Dao {
 
   /**

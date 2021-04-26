@@ -2,8 +2,8 @@ package vues.affectation;
 
 import javax.swing.JFrame;
 
-import dao.AffectationDao;
-import models.Affectation;
+import Dao.AffectationDao;
+import Models.Affectation;
 import vues.Fiche;
 
 public class FicheSupprAffectation extends JFrame {

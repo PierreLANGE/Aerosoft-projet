@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 
 // import des daos
-import dao.*;
+import Dao.*;
 
-// import des models
-import models.*;
+// import des Models
+import Models.*;
 
 // import des fiches génériques
 import vues.*;

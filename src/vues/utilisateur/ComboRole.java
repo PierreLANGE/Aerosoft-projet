@@ -13,8 +13,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 
-import dao.RoleDao;
-import models.Role;
+import Dao.RoleDao;
+import Models.Role;
 
 public class ComboRole {
 

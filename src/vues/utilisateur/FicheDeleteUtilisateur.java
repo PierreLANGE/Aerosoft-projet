@@ -3,10 +3,10 @@ package vues.utilisateur;
 import javax.swing.JFrame;
 
 // import des daos
-import dao.*;
+import Dao.*;
 
-// import des models
-import models.*;
+// import des Models
+import Models.*;
 import vues.Fiche;
 // import des fiches
 

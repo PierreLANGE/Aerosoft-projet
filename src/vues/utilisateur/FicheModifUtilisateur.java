@@ -6,8 +6,8 @@ import java.util.Map;
 
 import javax.swing.JFrame;
 
-import dao.*;
-import models.*;
+import Dao.*;
+import Models.*;
 import vues.FicheUtilisateur;
 
 public class FicheModifUtilisateur extends JFrame {

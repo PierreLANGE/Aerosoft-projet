@@ -2,8 +2,8 @@ package vues.home;
 
 import javax.swing.*;
 import java.awt.Font;
-import dao.PiloteDao;
-import models.Pilote;
+import Dao.PiloteDao;
+import Models.Pilote;
 import vues.Login;
 import vues.compte.MaFiche;
 

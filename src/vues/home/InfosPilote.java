@@ -2,8 +2,8 @@ package vues.home;
 
 import javax.swing.*;
 
-import dao.PiloteDao;
-import models.Pilote;
+import Dao.PiloteDao;
+import Models.Pilote;
 import vues.Fiche;
 import vues.FichePilote;
 

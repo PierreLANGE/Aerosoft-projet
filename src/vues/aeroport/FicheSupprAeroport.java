@@ -2,8 +2,8 @@ package vues.aeroport;
 
 import javax.swing.JFrame;
 
-import dao.AeroportDao;
-import models.Aeroport;
+import Dao.AeroportDao;
+import Models.Aeroport;
 import vues.Fiche;
 
 public class FicheSupprAeroport extends JFrame {

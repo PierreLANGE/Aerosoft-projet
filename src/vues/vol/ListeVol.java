@@ -4,10 +4,10 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 // import de volDao
-import dao.VolDao;
+import Dao.VolDao;
 
 // import du model vol
-import models.Vol;
+import Models.Vol;
 
 import java.awt.*;
 import java.awt.event.*;

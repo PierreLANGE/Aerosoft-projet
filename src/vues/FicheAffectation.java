@@ -10,7 +10,7 @@ import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
-import interfaces.Dao;
+import Interfaces.Dao;
 
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;

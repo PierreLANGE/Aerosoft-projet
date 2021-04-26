@@ -2,8 +2,8 @@ package vues.avion;
 
 import javax.swing.JFrame;
 
-import dao.AvionDao;
-import models.Avion;
+import Dao.AvionDao;
+import Models.Avion;
 import vues.Fiche;
 
 public class FicheSupprAvion extends JFrame {

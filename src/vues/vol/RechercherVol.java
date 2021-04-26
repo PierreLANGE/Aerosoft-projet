@@ -6,11 +6,11 @@ import java.awt.Dimension;
 import java.awt.*;
 import java.awt.event.*;
 
-// import des daos
-import dao.*;
+// import des Daos
+import Dao.*;
 
-// import des models
-import models.*;
+// import des Models
+import Models.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -29,7 +29,7 @@ public class RechercherVol extends JFrame implements ActionListener {
 
 	JButton btn1;
 	Vol v1;
-	VolDao dao = new VolDao();
+	VolDao Dao = new VolDao();
 
 	String[] tblHead = { "Id du vol", "Aeroport de depart", "Heure de depart", "Aeroport d'arrivé", "Heure d'arrivé" };
 	//Ajout du droit
@@ -157,7 +157,7 @@ public class RechercherVol extends JFrame implements ActionListener {
 		Object id = (Object) tf1.getText();
 		
 		// récupération du vol
-		v1 = (Vol) dao.get(id);
+		v1 = (Vol) Dao.get(id);
 
 		if (v1 != null) {
 			
@@ -182,7 +182,7 @@ public class RechercherVol extends JFrame implements ActionListener {
 						// récupération du vol sélectionné
 						Object id = (Object) table.getModel().getValueAt(row, column).toString();
 											
-						v1 = (Vol) dao.get(id);
+						v1 = (Vol) Dao.get(id);
 	
 						if (v1 != null) {
 							

@@ -4,8 +4,8 @@ import java.awt.FlowLayout;
 
 import java.awt.Toolkit;
 
-import dao.*;
-import models.*;
+import Dao.*;
+import Models.*;
 import vues.Fiche;
 import vues.LogoAeroSoft;
 

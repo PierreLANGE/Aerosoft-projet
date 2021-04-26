@@ -1,10 +1,10 @@
-package dao;
+package Dao;
 
 import connexion.ConnectionBdd;
-import interfaces.*;
+import Interfaces.*;
 import java.sql.*;
 import java.util.ArrayList;
-import models.Utilisateur;
+import Models.Utilisateur;
 import vues.SDialog;
 
 public class UtilisateurDao implements Dao {

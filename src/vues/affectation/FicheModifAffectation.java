@@ -1,10 +1,10 @@
 package vues.affectation;
 
-import dao.*;
+import Dao.*;
 import java.util.ArrayList;
 import javax.swing.JFrame;
-import models.Affectation;
-import models.*;
+import Models.Affectation;
+import Models.*;
 import vues.FicheAffectation;
 
 public class FicheModifAffectation extends JFrame {

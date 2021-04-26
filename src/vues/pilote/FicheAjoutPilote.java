@@ -5,9 +5,9 @@ import java.util.*;
 import javax.swing.JFrame;
 
 // import daos
-import dao.*;
-// import models
-import models.*;
+import Dao.*;
+// import Models
+import Models.*;
 // import fiches
 import vues.Fiche;
 import vues.FicheUtilisateurPilote;

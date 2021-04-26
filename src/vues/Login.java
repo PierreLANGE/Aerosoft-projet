@@ -16,11 +16,11 @@ import connexion.ConnectionBdd;
 // import vues Home
 import vues.home.Home;
 
-// import des models
-import models.*;
+// import des Models
+import Models.*;
 
 // import des daos
-import dao.*;
+import Dao.*;
 
 public class Login extends JFrame implements ActionListener, KeyListener {
 

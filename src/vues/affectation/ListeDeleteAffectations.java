@@ -3,8 +3,8 @@ package vues.affectation;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-import dao.AffectationDao;
-import models.Affectation;
+import Dao.AffectationDao;
+import Models.Affectation;
 
 import java.awt.*;
 import java.awt.event.*;

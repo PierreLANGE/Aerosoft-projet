@@ -3,8 +3,8 @@ package vues.aeroport;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-import dao.AeroportDao;
-import models.Aeroport;
+import Dao.AeroportDao;
+import Models.Aeroport;
 
 import java.awt.*;
 import java.awt.event.*;

@@ -3,8 +3,8 @@ package vues.avion;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-import dao.AvionDao;
-import models.Avion;
+import Dao.AvionDao;
+import Models.Avion;
 
 import java.awt.*;
 import java.awt.event.*;

@@ -1,12 +1,12 @@
-package dao;
+package Dao;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-import models.*;
+import Models.*;
 import vues.SDialog;
 import connexion.ConnectionBdd;
-import interfaces.Dao;
+import Interfaces.Dao;
 
 public class AffectationDao implements Dao {
 

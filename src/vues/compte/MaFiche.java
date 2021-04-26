@@ -1,6 +1,6 @@
 package vues.compte;
 
-import dao.UtilisateurDao;
+import Dao.UtilisateurDao;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -9,7 +9,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
-import models.Utilisateur;
+import Models.Utilisateur;
 import vues.Fiche;
 
 public class MaFiche {

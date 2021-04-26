@@ -3,8 +3,8 @@ package vues.utilisateur;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-import dao.*;
-import models.*;
+import Dao.*;
+import Models.*;
 
 import java.awt.*;
 import java.awt.event.*;

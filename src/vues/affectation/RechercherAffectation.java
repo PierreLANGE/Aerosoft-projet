@@ -6,8 +6,8 @@ import java.awt.Dimension;
 import java.awt.*;
 import java.awt.event.*;
 
-import dao.*;
-import models.*;
+import Dao.*;
+import Models.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;

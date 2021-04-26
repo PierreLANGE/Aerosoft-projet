@@ -3,10 +3,10 @@ package vues.vol;
 import javax.swing.JFrame;
 
 // import de VolDao
-import dao.VolDao;
+import Dao.VolDao;
 
 // import du model Vol
-import models.Vol;
+import Models.Vol;
 import vues.Fiche;
 // Import de Fiche générique avec le premier textField disabled
 

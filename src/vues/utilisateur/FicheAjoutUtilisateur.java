@@ -10,8 +10,8 @@ import java.util.*;
 
 import vues.Fiche;
 
-import models.*;
-import dao.*;
+import Models.*;
+import Dao.*;
 
 public class FicheAjoutUtilisateur extends JFrame implements ActionListener, KeyListener {
 

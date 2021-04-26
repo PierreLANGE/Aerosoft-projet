@@ -3,10 +3,10 @@ package vues.pilote;
 import javax.swing.JFrame;
 
 // import des daos
-import dao.*;
+import Dao.*;
 
-// import des models
-import models.*;
+// import des Models
+import Models.*;
 
 // import de la fiche générique
 import vues.*;
